@@ -1,7 +1,7 @@
 
-# SNS Events
+# AWSEventEmitter
 
-A library allowing you to emit and listen for events via Amazon's SNS service.
+A library allowing you to emit and listen for events via Amazon's SNS/SQS services.
 
 ## Documentation
 
