@@ -1,7 +1,7 @@
 'use strict';
 
-var AWSEventEmitter = require( '../index.js' );
-var test = require( 'tape' );
+const AWSEventEmitter = require( '../index.js' );
+const test = require( 'tape' );
 
 let emitter = null;
 

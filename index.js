@@ -3,6 +3,7 @@
 const async = require( 'async' );
 const AWS = require( 'aws-sdk' );
 const extend = require( 'extend' );
+const uuid = require( 'uuid' );
 
 let AWSEventEmitter = module.exports = {};
 
@@ -292,10 +293,7 @@ AWSEventEmitter._resolveMessage = function( message, callback ) {
         return;
     }
 
-    callback( null, {
-        eventName: decodedMessage.eventName,
-        event: decodedMessage.event
-    } );
+    callback( null, decodedMessage );
 };
 
 AWSEventEmitter._pollSQSQueue = function() {
@@ -376,6 +374,7 @@ AWSEventEmitter.emit = function( eventName, event ) {
     const params = {
         Subject: 'event',
         Message: JSON.stringify( {
+            id: uuid.v4(),
             eventName: eventName,
             event: event
         } ),

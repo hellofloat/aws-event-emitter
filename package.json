@@ -1,6 +1,6 @@
 {
   "name": "aws-event-emitter",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An event system using AWS SNS/SQS.",
   "license": "MIT",
   "contributors": [
@@ -22,7 +22,8 @@
   "dependencies": {
     "async": "^1.5.2",
     "aws-sdk": "^2.2.21",
-    "extend": "^3.0.0"
+    "extend": "^3.0.0",
+    "uuid": "^2.0.1"
   },
   "devDependencies": {
     "tap-spec": "^4.1.1",
