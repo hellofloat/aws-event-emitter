@@ -96,7 +96,7 @@ AWSEventEmitter.init = function( options, callback ) {
                 try {
                     self.sqsInfo.policy = data.Attributes && data.Attributes.Policy && JSON.parse( data.Attributes.Policy );
                 }
-                catch( ex ) {
+                catch ( ex ) {
                     next( ex );
                     return;
                 }
@@ -152,10 +152,10 @@ AWSEventEmitter.init = function( options, callback ) {
             } );
 
             const params = {
-              Attributes: {
-                Policy: JSON.stringify( policy )
-              },
-              QueueUrl: self.sqsInfo.queueURL
+                Attributes: {
+                    Policy: JSON.stringify( policy )
+                },
+                QueueUrl: self.sqsInfo.queueURL
             };
 
             self.sqs.setQueueAttributes( params, next );
@@ -208,7 +208,7 @@ AWSEventEmitter._onInitialized = function() {
     const self = this;
 
     let event = self.messageQueue.shift();
-    while( event ) {
+    while ( event ) {
         self.emit( event.eventName, event.event );
         event = self.messageQueue.shift();
     }
@@ -274,7 +274,7 @@ AWSEventEmitter._resolveMessage = function( message, callback ) {
     try {
         decodedBody = JSON.parse( message.Body );
     }
-    catch( ex ) {
+    catch ( ex ) {
         callback( ex );
         return;
     }
@@ -288,7 +288,7 @@ AWSEventEmitter._resolveMessage = function( message, callback ) {
     try {
         decodedMessage = JSON.parse( decodedBody.Message );
     }
-    catch( ex ) {
+    catch ( ex ) {
         callback( ex );
         return;
     }
@@ -328,9 +328,8 @@ AWSEventEmitter._pollSQSQueue = function() {
                     return;
                 }
 
-                if ( self.options.logEvents ) {
-                    console.log( 'AWS Event:' );
-                    console.log( require( 'util' ).inspect( decoded, { depth: null } ) );
+                if ( self.options.logger ) {
+                    self.options.logger( decoded );
                 }
 
                 self._emit( decoded.eventName, decoded.event );

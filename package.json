@@ -1,6 +1,6 @@
 {
   "name": "aws-event-emitter",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "An event system using AWS SNS/SQS.",
   "license": "MIT",
   "contributors": [
