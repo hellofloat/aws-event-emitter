@@ -279,14 +279,11 @@ AWSEventEmitter._resolveMessage = function( message, callback ) {
         return;
     }
 
-    if ( decodedBody.Subject !== 'event' ) {
-        callback( 'AWSEventEmitter Got unknown message subject: ' + decodedBody.Subject );
-        return;
-    }
-
     let decodedMessage = null;
     try {
-        decodedMessage = JSON.parse( decodedBody.Message );
+        decodedMessage = extend( {
+            aws: decodedBody
+        }, JSON.parse( decodedBody.Message ) );
     }
     catch ( ex ) {
         callback( ex );
@@ -330,6 +327,12 @@ AWSEventEmitter._pollSQSQueue = function() {
 
                 if ( self.options.logger ) {
                     self.options.logger( decoded );
+                }
+
+                if ( !decoded.eventName ) {
+                    self.emit( 'error', 'No eventName in event (skipping): ' + JSON.stringify( decoded ) );
+                    next();
+                    return;
                 }
 
                 self._emit( decoded.eventName, decoded.event );
